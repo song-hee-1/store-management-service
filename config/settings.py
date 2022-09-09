@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.coupons.apps.CouponsConfig',
+    'apps.orders.apps.OrdersConfig',
+    'apps.deliveries.apps.DeliveriesConfig',
     'rest_framework',
 ]
 
