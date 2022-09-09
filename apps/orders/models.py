@@ -28,4 +28,4 @@ class Order(models.Model):
         db_table = 'order'
 
     def __str__(self):
-        return self.id
+        return str(self.id)

@@ -126,4 +126,4 @@ class DeliveryCost(models.Model):
         db_table = 'delivery_cost'
 
     def __str__(self):
-        return self.id
+        return str(self.id)
