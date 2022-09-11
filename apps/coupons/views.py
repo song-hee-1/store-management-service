@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Coupon
+from .serializers import CouponSerializer, CouponTypeSerializer
+
+
+class CouponViewSet(viewsets.ModelViewSet):
+    serializer_class = CouponSerializer
+    queryset = Coupon.objects.all()
+
+
+class CouponTypeViewSet(viewsets.ModelViewSet):
+    serializer_class = CouponTypeSerializer
+    queryset = Coupon.objects.all()
