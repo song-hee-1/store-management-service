@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 
 class Coupon(models.Model):
@@ -44,7 +45,15 @@ class CouponType(models.Model):
     정액 할인 : 1
     % 할인 : 2
     """
-    type = models.PositiveIntegerField(null=True)
+    type = models.PositiveIntegerField()
+    discount = models.PositiveIntegerField()
 
     class Meta:
         db_table = 'coupon_type'
+
+
+# 발급된 쿠폰의 사용내역 열람을 위해 사용된 쿠폰 테이블 추가
+class ClaimedCoupon(models.Model):
+    redeemed = models.DateTimeField(auto_now_add=True)
+    coupon = models.ForeignKey('Coupon')
+    user = models.ForeignKey(User)
