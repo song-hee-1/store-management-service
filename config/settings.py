@@ -39,6 +39,7 @@ def get_secret(setting):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
+RATE_OF_EXCHANGE_API_KEY = get_secret("RATE_OF_EXCHANGE_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

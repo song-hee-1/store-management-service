@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from .models import Order
 from apps.deliveries.models import CountryCode, DeliveryCost
 from .serializers import OrderSerializer
+from .utils import get_current_rate_of_exchange
 
 
 class DateFilter(filters.FilterSet):
@@ -54,7 +55,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             delivery_cost = delivery_cost_per_quantity.values()[0][country_name]
 
             if country_name != 'South Korea':
-                delivery_cost = round(delivery_cost / 1200, 4)
+                current_rate_of_exchange = get_current_rate_of_exchange(request)
+                delivery_cost = round(delivery_cost / current_rate_of_exchange, 4)
         else:
             message = {"ERROR": "에러가 발생하였습니다. 입력된 국가 코드가 유효하지 않습니다"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
