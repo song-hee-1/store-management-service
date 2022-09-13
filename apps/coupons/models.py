@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 
 
@@ -8,7 +7,8 @@ class Coupon(models.Model):
     code = models.CharField(max_length=50, unique=True)
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()
-    # discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    # value는 %나 정액 할인 모두 가능하고, %의 경우 1.0보다 작게 입력해야 함
+    value = models.DecimalField(default=0.0, max_digits=6, decimal_places=2)
     active = models.BooleanField(default=True)
     num_available = models.PositiveIntegerField(null=True)
     num_used = models.IntegerField(default=0)
