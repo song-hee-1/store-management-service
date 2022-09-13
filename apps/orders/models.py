@@ -28,9 +28,9 @@ class Order(models.Model):
     buyr_zipx = models.CharField(max_length=20, verbose_name='구매자 우편번호')
     vccode = models.CharField(max_length=10, verbose_name='나라별 decode')
     delivery_num = models.CharField(null=True, max_length=10, verbose_name='송장번호')
-    delivery_cost = models.ForeignKey('deliveries.DeliveryCost', null=True,
-                                      db_column='delivery_cost', on_delete=models.PROTECT, verbose_name='배송비')
-    coupon = models.ForeignKey('coupons.Coupon', verbose_name='쿠폰', on_delete=models.SET_NULL, null=True)
+    delivery_cost = models.DecimalField(max_digits=6, decimal_places=3, verbose_name='배송비', null=True)
+    coupon = models.ForeignKey('coupons.Coupon', verbose_name='쿠폰', on_delete=models.SET_NULL, null=True,
+                               db_constraint=False)
     start_at = models.DateField(auto_now_add=True, verbose_name='주문시작일자')
     end_at = models.DateField(auto_now=True, verbose_name='주문종료일자')
 
