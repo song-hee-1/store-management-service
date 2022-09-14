@@ -29,8 +29,8 @@ class CouponType(models.Model):
     class Meta:
         db_table = 'coupon_type'
 
-    def __str__(self):
-        return str(self.type)
+    # def __str__(self):
+    #     return str(self.type)
 
 
 # 발급된 쿠폰의 사용내역 열람을 위해 사용된 쿠폰 테이블 추가
