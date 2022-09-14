@@ -80,6 +80,9 @@ class OrderViewSet(viewsets.ModelViewSet):
             else:
                 coupon_discount = product_price * coupon_value
 
+        if coupon_discount > product_price:
+            coupon_discount = product_price
+
         total_price = product_price + delivery_cost - coupon_discount
 
         if total_price < 0:
