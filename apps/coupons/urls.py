@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from .views import CouponViewSet, CouponTypeViewSet, ClaimedCouponViewSet
+from .views import CouponViewSet, CouponTypeViewSet, ClaimedCouponViewSet, ClaimedCouponTypeView
 
 router = DefaultRouter()
 router.register('coupons', viewset=CouponViewSet, basename='coupon')
@@ -11,4 +11,5 @@ router.register('claimed-coupons', viewset=ClaimedCouponViewSet, basename='cliam
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('claimed-coupons-types', ClaimedCouponTypeView.as_view())
 ]

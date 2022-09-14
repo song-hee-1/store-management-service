@@ -30,7 +30,7 @@ class CouponType(models.Model):
         db_table = 'coupon_type'
 
     def __str__(self):
-        return self.type
+        return str(self.type)
 
 
 # 발급된 쿠폰의 사용내역 열람을 위해 사용된 쿠폰 테이블 추가
@@ -38,6 +38,7 @@ class ClaimedCoupon(models.Model):
     redeemed = models.DateTimeField(auto_now_add=True)
     coupon = models.ForeignKey('Coupon', on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    coupon_discount = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
 
     class Meta:
         db_table = 'claimed_coupon'
