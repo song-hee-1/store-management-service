@@ -1,9 +1,9 @@
 import requests
+from decimal import Decimal
 from django.conf import settings
 
 
 def get_current_rate_of_exchange(request):
-
     url = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON"
 
     params = {
@@ -12,8 +12,12 @@ def get_current_rate_of_exchange(request):
     }
 
     response = requests.get(url=url, params=params).json()
-    deal_base_r = response[-1]['deal_bas_r']
-    replace_comma_deal_base_r = deal_base_r.replace(",", "")
 
-    current_rate_of_exchange = float(replace_comma_deal_base_r)
-    return current_rate_of_exchange
+    try:
+        deal_base_r = response[-1]['deal_bas_r']
+        replace_comma_deal_base_r = deal_base_r.replace(",", "")
+        current_rate_of_exchange = Decimal(replace_comma_deal_base_r)
+    except:
+        current_rate_of_exchange = 1200
+    finally:
+        return current_rate_of_exchange

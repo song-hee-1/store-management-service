@@ -7,9 +7,4 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
-        read_only_fields = ['delivery_cost']
-
-    # def create(self, validated_data):
-    #     buyr_country_code = validated_data.pop('buyr_country')
-    #
-    #     return Order.objects.create(buyr_country = buyr_country_code, **validated_data)
+        read_only_fields = ['delivery_cost', 'coupon_discount', 'total_price']

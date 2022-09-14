@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from .models import Order
 from apps.deliveries.models import CountryCode, DeliveryCost
+from apps.coupons.models import Coupon
 from .serializers import OrderSerializer
 from .utils import get_current_rate_of_exchange
 
@@ -61,9 +62,32 @@ class OrderViewSet(viewsets.ModelViewSet):
             message = {"ERROR": "에러가 발생하였습니다. 입력된 국가 코드가 유효하지 않습니다"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-        self.perform_create(serializer, delivery_cost)
+        coupon = data['coupon']
+        coupon_id = coupon.id
+        product_price = data['product_price']
+        coupon_discount = 0
+        total_price = 0
+
+        if coupon:
+            coupon_type = Coupon.objects.get(id=coupon_id).type.type
+            coupon_value = Coupon.objects.get(id=coupon_id).value
+
+            if coupon_type == 1:
+                coupon_discount += delivery_cost
+            elif coupon_type == 2:
+                coupon_discount = coupon_value
+                product_price -= coupon_discount
+            else:
+                coupon_discount = product_price * coupon_value
+
+        total_price = product_price + delivery_cost - coupon_discount
+
+        if total_price < 0:
+            total_price = 0
+
+        self.perform_create(serializer, delivery_cost, coupon_discount, total_price)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def perform_create(self, serializer, delivery_cost=None):
-        serializer.save(delivery_cost=delivery_cost)
+    def perform_create(self, serializer, delivery_cost=None, coupon_discount=None, total_price=None):
+        serializer.save(delivery_cost=delivery_cost, coupon_discount=coupon_discount, total_price=total_price)
