@@ -10,8 +10,6 @@ class Coupon(models.Model):
     # value는 %나 정액 할인 모두 가능하고, %의 경우 1.0보다 작게 입력해야 함
     value = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     active = models.BooleanField(default=True)
-    num_available = models.PositiveIntegerField(null=True)
-    num_used = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'coupon'
@@ -31,8 +29,8 @@ class CouponType(models.Model):
     class Meta:
         db_table = 'coupon_type'
 
-    def __str__(self):
-        return self.type
+    # def __str__(self):
+    #     return str(self.type)
 
 
 # 발급된 쿠폰의 사용내역 열람을 위해 사용된 쿠폰 테이블 추가
@@ -40,6 +38,7 @@ class ClaimedCoupon(models.Model):
     redeemed = models.DateTimeField(auto_now_add=True)
     coupon = models.ForeignKey('Coupon', on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    coupon_discount = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
 
     class Meta:
         db_table = 'claimed_coupon'
