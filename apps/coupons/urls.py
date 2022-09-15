@@ -6,7 +6,7 @@ from .views import CouponViewSet, CouponTypeViewSet, ClaimedCouponViewSet, Claim
 
 router = DefaultRouter()
 router.register('coupons', viewset=CouponViewSet, basename='coupon')
-router.register('coupons-type', viewset=CouponTypeViewSet, basename='coupon-type')
+router.register('coupons-types', viewset=CouponTypeViewSet, basename='coupon-type')
 router.register('claimed-coupons', viewset=ClaimedCouponViewSet, basename='claimed-coupon')
 
 urlpatterns = [
