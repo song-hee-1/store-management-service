@@ -64,12 +64,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                 message = {"ERROR": "에러가 발생하였습니다. 입력된 국가 코드가 유효하지 않습니다."}
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-            # 한국이 아니라면 delivery_cost는 현재 환율을 이용하여 달러로 표시
-            # product_price도 현재 환율로 계산하여 total_price가 달러로 표시될 수 있게 함
-            if country_name != 'South Korea':
-                current_rate_of_exchange = get_current_rate_of_exchange(request)
-                delivery_cost = round(delivery_cost / current_rate_of_exchange, 4)
-                product_price = round(product_price / current_rate_of_exchange, 4)
+        # 한국이 아니라면 delivery_cost는 현재 환율을 이용하여 달러로 표시
+        # product_price도 현재 환율로 계산하여 total_price가 달러로 표시될 수 있게 함
+        if country_name != 'South_Korea':
+            current_rate_of_exchange = get_current_rate_of_exchange(request)
+            delivery_cost = round(delivery_cost / current_rate_of_exchange, 4)
+            product_price = round(product_price / current_rate_of_exchange, 4)
 
         if coupon:
             coupon_id = coupon.id
@@ -92,9 +92,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         if total_price < 0:
             total_price = 0
 
-        self.perform_create(serializer, delivery_cost, coupon_discount, total_price)
+        self.perform_create(serializer, delivery_cost, coupon_discount, total_price, product_price)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def perform_create(self, serializer, delivery_cost=None, coupon_discount=None, total_price=None):
-        serializer.save(delivery_cost=delivery_cost, coupon_discount=coupon_discount, total_price=total_price)
+    def perform_create(self, serializer,
+                       delivery_cost=None, coupon_discount=None, total_price=None, product_price=None):
+        serializer.save(delivery_cost=delivery_cost, coupon_discount=coupon_discount,
+                        total_price=total_price, product_price=product_price)
