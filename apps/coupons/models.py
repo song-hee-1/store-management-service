@@ -7,7 +7,7 @@ class Coupon(models.Model):
     code = models.CharField(max_length=50, unique=True)
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()
-    # value는 %나 정액 할인 모두 가능하고, %의 경우 1.0보다 작게 입력해야 함
+    # value는 %나 정액 할인 모두 가능하고, %의 경우 1.0 이하만 가능
     value = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     active = models.BooleanField(default=True)
 
