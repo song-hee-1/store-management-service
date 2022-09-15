@@ -46,6 +46,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         data = serializer.validated_data
         buyr_country_code = data['buyr_country']
         quantity = data['quantity']
+        coupon = data['coupon']
+        product_price = data['product_price']
+
+        coupon_discount = 0
+        total_price = 0
 
         # 입력받은 country code로 country name 가져옴
         country_name = CountryCode.objects.filter(country_code=buyr_country_code).values()[0]['country_name']
@@ -53,19 +58,18 @@ class OrderViewSet(viewsets.ModelViewSet):
         if country_name:
             # 나라별로 수량에 맞는 배송비를 가져옴
             delivery_cost_per_quantity = DeliveryCost.objects.filter(quantity=quantity)
-            delivery_cost = delivery_cost_per_quantity.values()[0][country_name]
+            try:
+                delivery_cost = delivery_cost_per_quantity.values()[0][country_name]
+            except KeyError:
+                message = {"ERROR": "에러가 발생하였습니다. 입력된 국가 코드가 유효하지 않습니다."}
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
+            # 한국이 아니라면 delivery_cost는 현재 환율을 이용하여 달러로 표시
+            # product_price도 현재 환율로 계산하여 total_price가 달러로 표시될 수 있게 함
             if country_name != 'South Korea':
                 current_rate_of_exchange = get_current_rate_of_exchange(request)
                 delivery_cost = round(delivery_cost / current_rate_of_exchange, 4)
-        else:
-            message = {"ERROR": "에러가 발생하였습니다. 입력된 국가 코드가 유효하지 않습니다"}
-            return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
-        coupon = data['coupon']
-        product_price = data['product_price']
-        coupon_discount = 0
-        total_price = 0
+                product_price = round(product_price / current_rate_of_exchange, 4)
 
         if coupon:
             coupon_id = coupon.id
