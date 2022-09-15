@@ -29,7 +29,7 @@ class DeliveryCostTestCase(APITestCase):
         CountryCode.objects.create(country_idx=221, country_code="US", country_dcode="+1", country_name="USA")
         CountryCode.objects.create(country_idx=37, country_code="CA", country_dcode="+1", country_name="Canada")
         DeliveryCost.objects.create(
-            id=1, quantity=1, Australia=26000, Brazil=38300, Canada=34370, China=25970, France=31070, Germany=36220,
+            id=1, quantity=1, South_Korea=3000, Australia=26000, Brazil=38300, Canada=34370, China=25970, France=31070, Germany=36220,
             Hong_kong=24250, Indonesia=21200, Japan=25470, Malaysia=19820, New_Zealand=26000, Philippines=20550,
             Russia=37070, Singapore=17550, Spain=33720, Taiwan=19720, Thailand=20970, UK=38070, USA=33370,
             Vietnam=18970, Cambodia=21500, Laos=21500, Macao=21500, Mongolia=21500, Myanmar=21500, Bangladesh=22000,
@@ -48,7 +48,7 @@ class DeliveryCostTestCase(APITestCase):
             Tunisia=36000, Zambia=36000
         )
         DeliveryCost.objects.create(
-            id=2, quantity=2, Australia=32000, Brazil=46500, Canada=40620, China=29620, France=36620, Germany=42370,
+            id=2, quantity=2, South_Korea=3000, Australia=32000, Brazil=46500, Canada=40620, China=29620, France=36620, Germany=42370,
             Hong_kong=26750, Indonesia=24500, Japan=29120, Malaysia=23370, New_Zealand=30500, Philippines=23250,
             Russia=44120, Singapore=21250, Spain=40370, Taiwan=22870, Thailand=23620, UK=44120, USA=42620,
             Vietnam=21620,
