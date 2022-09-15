@@ -18,6 +18,7 @@ class CountryCode(models.Model):
 class DeliveryCost(models.Model):
     id = models.BigAutoField(primary_key=True)
     quantity = models.PositiveIntegerField(validators=[MaxValueValidator(72)], verbose_name='수량')
+    South_Korea = models.PositiveIntegerField(validators=[MaxValueValidator(426500)])
     Australia = models.PositiveIntegerField(validators=[MaxValueValidator(426500)])
     Brazil = models.PositiveIntegerField(validators=[MaxValueValidator(426500)])
     Canada = models.PositiveIntegerField(validators=[MaxValueValidator(426500)])

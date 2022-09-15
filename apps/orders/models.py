@@ -21,7 +21,7 @@ class Order(models.Model):
     pay_state = models.CharField(max_length=4, choices=PAY_STATE_CHOICES, verbose_name='결제상태')
     order_state = models.CharField(max_length=5, default=0, choices=ORDER_STATE_CHOICES, verbose_name='주문상태')
     quantity = models.PositiveIntegerField(default=1, verbose_name='수량')
-    product_price = models.IntegerField(validators=[MaxValueValidator(10000000)], verbose_name='상품 가격')
+    product_price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='상품 가격')
     coupon_discount = models.DecimalField(default=0.0, max_digits=8, decimal_places=2, null=True,
                                           verbose_name = '쿠폰 할인금액')
     total_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, verbose_name='총 주문금액')
