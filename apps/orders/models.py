@@ -27,7 +27,7 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, verbose_name='총 주문금액')
     buyr_name = models.CharField(max_length=10, null=True, verbose_name='구매자')
     buyr_city = models.CharField(max_length=20, verbose_name='구매자 도시')
-    buyr_country = models.CharField(max_length=5, verbose_name='구매자 국가')
+    buyr_country = models.CharField(max_length=5, verbose_name='구매자 국가코드')
     buyr_zipx = models.CharField(max_length=20, verbose_name='구매자 우편번호')
     vccode = models.CharField(max_length=10, verbose_name='나라별 decode')
     delivery_num = models.CharField(null=True, max_length=10, verbose_name='송장번호')
