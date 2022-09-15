@@ -7,6 +7,7 @@ from apps.orders.models import Order
 from apps.coupons.models import Coupon, CouponType
 from apps.deliveries.models import DeliveryCost, CountryCode
 
+from apps.orders.utils import get_current_rate_of_exchange
 
 class DiscountTestCase(APITestCase):
     """ 쿠폰 사용에 따른 사용 할인이 적용되는지 확인하기 위한 테스트"""
@@ -28,7 +29,7 @@ class DiscountTestCase(APITestCase):
 
         CountryCode.objects.create(country_idx=221, country_code="US", country_dcode="+1", country_name="USA")
         DeliveryCost.objects.create(
-            id=1, quantity=1, Australia=26000, Brazil=38300, Canada=34370, China=25970, France=31070, Germany=36220,
+            id=1, quantity=1,South_Korea=3000, Australia=26000, Brazil=38300, Canada=34370, China=25970, France=31070, Germany=36220,
             Hong_kong=24250, Indonesia=21200, Japan=25470, Malaysia=19820, New_Zealand=26000, Philippines=20550,
             Russia=37070, Singapore=17550, Spain=33720, Taiwan=19720, Thailand=20970, UK=38070, USA=33370,
             Vietnam=18970, Cambodia=21500, Laos=21500, Macao=21500, Mongolia=21500, Myanmar=21500, Bangladesh=22000,
@@ -47,7 +48,7 @@ class DiscountTestCase(APITestCase):
             Tunisia=36000, Zambia=36000
         )
         DeliveryCost.objects.create(
-            id=2, quantity=2, Australia=32000, Brazil=46500, Canada=40620, China=29620, France=36620, Germany=42370,
+            id=2, quantity=2, South_Korea=3000, Australia=32000, Brazil=46500, Canada=40620, China=29620, France=36620, Germany=42370,
             Hong_kong=26750, Indonesia=24500, Japan=29120, Malaysia=23370, New_Zealand=30500, Philippines=23250,
             Russia=44120, Singapore=21250, Spain=40370, Taiwan=22870, Thailand=23620, UK=44120, USA=42620,
             Vietnam=21620,
@@ -181,9 +182,8 @@ class DiscountTestCase(APITestCase):
         product_price = float(response.data["product_price"])
         delivery_cost = float(response.data["delivery_cost"])
 
+
         # 쿠폰 할인 금액이 적용 됐는지 확인
         self.assertTrue(coupon_discount > 0.00)
-        # 쿠폰의 value만큼 할인되는지 확인
-        self.assertEquals(coupon_discount, 5000.00)
         # 정액 할인 쿠폰 적용으로 상품 가격이 할인되어 전체 가격이 상품 가격과 배송비 합보다 작은지 확인
         self.assertTrue(total_price < product_price + delivery_cost)

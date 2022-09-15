@@ -38,7 +38,7 @@ class CouponViewSet(viewsets.ModelViewSet):
 
 class CouponTypeViewSet(viewsets.ModelViewSet):
     serializer_class = CouponTypeSerializer
-    queryset = Coupon.objects.all()
+    queryset = CouponType.objects.all()
 
 
 class ClaimedCouponViewSet(viewsets.ModelViewSet):
@@ -52,10 +52,10 @@ class ClaimedCouponViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     def retrieve(self, request, *args, **kwargs):
-        return Response(status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def update(self, request, pk=None, **kwargs):
-        return Response(status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ClaimedCouponTypeView(APIView):
