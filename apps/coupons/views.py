@@ -38,7 +38,7 @@ class CouponViewSet(viewsets.ModelViewSet):
 
 class CouponTypeViewSet(viewsets.ModelViewSet):
     serializer_class = CouponTypeSerializer
-    queryset = Coupon.objects.all()
+    queryset = CouponType.objects.all()
 
 
 class ClaimedCouponViewSet(viewsets.ModelViewSet):
