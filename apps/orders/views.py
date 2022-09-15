@@ -63,12 +63,12 @@ class OrderViewSet(viewsets.ModelViewSet):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
         coupon = data['coupon']
-        coupon_id = coupon.id
         product_price = data['product_price']
         coupon_discount = 0
         total_price = 0
 
         if coupon:
+            coupon_id = coupon.id
             coupon_type = Coupon.objects.get(id=coupon_id).type.type
             coupon_value = Coupon.objects.get(id=coupon_id).value
 
